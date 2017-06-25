@@ -25,8 +25,11 @@ which moves all classes to the bottom of the file:
 # Usage
 
 To install,
-put `vims` somewhere on your path, e.g., `/usr/bin`. It's pretty much
-a one-liner convenient version of pre-built vim commands.
+put `vims` somewhere on your path, e.g., `/usr/bin`.
+
+```
+... | vims [ -n -d ] { '...' ... }
+```
 
 Call `vims` on piped input, providing a list of arguments that you
 would use in vim command-line mode. All lines not deleted are printed
@@ -40,7 +43,7 @@ cat myfile.txt | vims '%g/foo/d'
 ```
 
 Your default vimrc should be enabled by default, turn it off with
-`-d|--disable-vimrc`
+`-d|--disable-vimrc`.
 
 # Credit
 
