@@ -2,7 +2,7 @@
 
 Do you live in a vim editor? Then, maybe, performing stream
 editing with a command-line vim would feel a little more natural than
-if you were to use sed or awk, and just as concise.
+if you were to use sed or awk, but just as concise.
 
 ```
 cat myfile.txt | vims '%g/foo/norm O # foo comment'
