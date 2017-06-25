@@ -1,24 +1,30 @@
-# vim-stream
-Use vim as a powerful stream editor, like sed or awk
+# vims
 
-Put `vims` somewhere on your path, e.g., `/usr/bin`.
+Do you live in a vim editor? Then, maybe, performing stream
+editing with a command-line vim would feel a little more natural.
+
+`vims` let's you use vim as a powerful stream editor, like sed or awk.
+
+To install,
+put `vims` somewhere on your path, e.g., `/usr/bin`.
 
 # Usage
 
 Call `vims` on piped input, providing a list of arguments that you
-would use in vim command-line mode.
+would use in vim command-line mode. All lines not deleted are printed
+by default.
 
 For example,
 to delete every line that matches "foo", and print:
 
 ```
-cat myfile.txt | vims ':%g/foo/d'
+cat myfile.txt | vims '%g/foo/d'
 ```
 
 To delete a class called "bar", then all blank lines, then print:
 
 ```
-cat myscript.py | vims ':%g/^class bar/exe "norm V/^\S\<enter>kd"' ':%g/^\s*$/d'
+cat myscript.py | vims '%g/^class bar/exe "norm V/^\S\<enter>kd"' '%g/^\s*$/d'
 ```
 
 This finds the line with "class bar" at its start, then
