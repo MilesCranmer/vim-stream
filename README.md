@@ -28,12 +28,12 @@ To install,
 put `vims` somewhere on your path, e.g., `/usr/bin`.
 
 ```
-... | vims [ -n -d ] { '...' ... }
+{command} | vims [-n|--silent] [-d|--disable-vimrc] [ <args>... ]
 ```
 
 Call `vims` on piped input, providing a list of arguments that you
 would use in vim command-line mode. All lines not deleted are printed
-by default, but you can turn this off with a `-n|--silent|--quiet` flag.
+by default, but you can turn this off with a `-n|--silent` flag.
 
 For example,
 to delete every line that matches "foo", and print:
