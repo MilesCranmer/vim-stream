@@ -5,7 +5,7 @@ editing with vim feels more natural than
 sed or awk:
 
 ```
-cat myfile.txt | vims ':3,4norm yyGp' ':1d'
+cat myfile.txt | vims '3,4norm yyGp' '1d'
 ```
 which means: on the 3rd and 4th line, enter normal mode and
 copy the line to the bottom of the file. The second command
