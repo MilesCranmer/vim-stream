@@ -4,11 +4,16 @@
 vim_cmds=()
 
 PRINT_ALL=1
+DISABLE_VIMRC=0
+
 while (($# > 0)); do
     arg="$1"
     case "$arg" in
         -n|--silent|--quiet)
             PRINT_ALL=0
+            ;;
+        -d|--disable-vimrc)
+            DISABLE_VIMRC=1
             ;;
         *)
             # unknown option
@@ -24,5 +29,8 @@ done
 if [ "$PRINT_ALL" -eq "1" ]; then
     vim_cmds+=(-c ":%p")
 fi
+if [ "$DISABLE_VIMRC" -eq "1" ]; then
+    vim_cmds=(-u NONE "${vim_cmds[@]}")
+fi
 
-vim - -nes -u NONE "${vim_cmds[@]}" -c ':q!' | tail -n +2
+vim - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2
