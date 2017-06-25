@@ -1,2 +1,14 @@
 #!/bin/bash
-vim - -nes -u NONE "$@" -c ':%p' -c ':q!' | tail -n +2
+# The argument fixes were supplied by John Kugelman
+# https://stackoverflow.com/a/44745698/2689923
+args=()
+
+while (($# > 0)); do
+    args+=(-c "$1")
+    shift
+done
+
+# Headless vim which exits after printing all lines
+# Taken from Csaba Hoch:
+# https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb4/Ir0faiNaFZwJ
+vim - -nes -u NONE "${args[@]}" -c ':%p' -c ':q!' | tail -n +2
