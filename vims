@@ -21,7 +21,7 @@ done
 # Headless vim which exits after printing all lines
 # Taken from Csaba Hoch:
 # https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb4/Ir0faiNaFZwJ
-if [ "$PRINT_ALL" -eq "0" ]; then
+if [ "$PRINT_ALL" -eq "1" ]; then
     vim - -nes -u NONE "${vim_cmds[@]}" -c ':%p' -c ':q!' | tail -n +2
 else
     vim - -nes -u NONE "${vim_cmds[@]}" -c ':q!' | tail -n +2
