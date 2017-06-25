@@ -7,15 +7,25 @@ sed or awk:
 ```
 cat myfile.txt | vims '3,4norm yyGp' '1d'
 ```
-which means: on the 3rd and 4th line, enter normal mode and
-copy the line to the bottom of the file. The second command
-deletes line 1.
+which means: 
+ - `3,4norm yyGp` on the 3rd and 4th line, enter normal mode and
+copy the line to the bottom of the file.
+ - `1d` delete line 1
 
+Or, using [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g),
+```
+cat myscript.py | vims '%g/^class/exe "norm V/^\S\<enter>kdGp"'
+```
+which moves all classes to the bottom of the file:
+ - `%g/^class/` - Every line starting with "class"
+ - `exe "norm V/^\S\<enter>kdGp"` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom
+
+
+
+# Usage
 
 To install,
 put `vims` somewhere on your path, e.g., `/usr/bin`.
-
-# Usage
 
 Call `vims` on piped input, providing a list of arguments that you
 would use in vim command-line mode. All lines not deleted are printed
@@ -27,16 +37,6 @@ to delete every line that matches "foo", and print:
 ```
 cat myfile.txt | vims '%g/foo/d'
 ```
-
-To delete a class called "bar", then all blank lines, then print:
-
-```
-cat myscript.py | vims '%g/^class bar/exe "norm V/^\S\<enter>kd"' '%g/^\s*$/d'
-```
-
-This finds the line with "class bar" at its start, then
-starts visual select mode, goes to the next non-whitespace character
-at the front of the line, moves up one line, then deletes.
 
 # Credit
 
