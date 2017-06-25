@@ -1,6 +1,8 @@
 # vim-stream
 Use vim as a powerful stream editor, like sed or awk
 
+Put `vims` somewhere on your path, e.g., `/usr/bin`.
+
 # Usage
 
 Call `vims` on piped input, providing a list of arguments that you
