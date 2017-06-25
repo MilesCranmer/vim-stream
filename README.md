@@ -25,11 +25,12 @@ which moves all classes to the bottom of the file:
 # Usage
 
 To install,
-put `vims` somewhere on your path, e.g., `/usr/bin`.
+put `vims` somewhere on your path, e.g., `/usr/bin`. It's pretty much
+a one-liner convenient version of pre-built vim commands.
 
 Call `vims` on piped input, providing a list of arguments that you
 would use in vim command-line mode. All lines not deleted are printed
-by default.
+by default, but you can turn this off with a `-n|--no-print` flag.
 
 For example,
 to delete every line that matches "foo", and print:
