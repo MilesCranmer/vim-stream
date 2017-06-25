@@ -1,9 +1,14 @@
 # vims
 
 Do you live in a vim editor? Then, maybe, performing stream
-editing with a command-line vim would feel a little more natural.
+editing with a command-line vim would feel a little more natural than
+if you were to use sed or awk, and just as concise.
 
-`vims` let's you use vim as a powerful stream editor, like sed or awk.
+```
+cat myfile.txt | vims '%g/foo/norm O # foo comment'
+```
+(which puts "`# foo comment`" above every line containing `foo`.)
+
 
 To install,
 put `vims` somewhere on your path, e.g., `/usr/bin`.
