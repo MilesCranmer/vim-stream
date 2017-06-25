@@ -7,7 +7,7 @@ if you were to use sed or awk, but just as concise.
 ```
 cat myfile.txt | vims '%g/foo/norm O # foo comment'
 ```
-(which puts "`# foo comment`" above every line containing `foo`.)
+(which puts `# foo comment` above every line containing `foo`, using [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g))
 
 
 To install,
