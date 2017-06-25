@@ -39,6 +39,9 @@ to delete every line that matches "foo", and print:
 cat myfile.txt | vims '%g/foo/d'
 ```
 
+Your default vimrc should be enabled by default, turn it off with
+`-d|--disable-vimrc`
+
 # Credit
 
 I innovated very little (none) on this script, I basically took a Google Groups
