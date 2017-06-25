@@ -5,9 +5,11 @@ editing with a command-line vim would feel a little more natural than
 if you were to use sed or awk, but just as concise.
 
 ```
-cat myfile.txt | vims '%g/foo/norm O # foo comment'
+cat myfile.txt | vims ':3,4norm yyGp' ':1d'
 ```
-(which puts `# foo comment` above every line containing `foo`, using [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g))
+which means: on the 3rd and 4th line, enter normal mode, then
+copy the line to the bottom of the file. The second command
+deletes line 1.
 
 
 To install,
