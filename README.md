@@ -16,7 +16,7 @@ cat myfile.txt | vims -c ':%g/foo/d'
 To delete a class called "bar", then all blank lines, then print:
 
 ```
-cat myscript.py | vims -c ':%g/^class bar/exe "norm V/^\S\<enter>kd"' -c ':%g/^\s*/d'
+cat myscript.py | vims -c ':%g/^class bar/exe "norm V/^\S\<enter>kd"' -c ':%g/^\s*$/d'
 ```
 
 This finds the line with "class bar" at its start, then
