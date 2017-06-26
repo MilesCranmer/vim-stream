@@ -16,10 +16,11 @@ Or, using [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g),
 ```
 cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
 ```
-which uses "exe" mode to moves all classes to the bottom of the file:
- - `'^class' 'V/^\S\<enter>kdGp'` becomes '%g/^class/exe "norm V/^\S\<enter>kdGp"'
+which uses "exe" mode to move all classes to the bottom of the file:
+ - `'^class' 'V/^\S\<enter>kdGp'` becomes `'%g/^class/exe "norm V/^\S\<enter>kdGp"'`
      - `%g/^class/` - Every line starting with "class"
-     - `exe "norm V/^\S\<enter>kdGp"` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom
+     - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o
+     - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
 
 
 
