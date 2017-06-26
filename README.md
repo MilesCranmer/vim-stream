@@ -15,7 +15,7 @@ copy the line to the bottom of the file.
 
 You can also use "exe" mode (flag `-e`):
 for example, to comment out in C++
-every line containing `"my_bad_var"`,
+every line containing `my_bad_var`,
 then delete the line above it:
 
 ```
