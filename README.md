@@ -87,6 +87,7 @@ Only print the last 4 lines (just like tail)
 ```
 cat txt | vims -n '$-4,$p'
 ```
+- `-n` - Don't print all lines automatically
 - `$-4,$` - A range extending from 4th last line to the last line
 - `p` - Print
 
@@ -105,6 +106,23 @@ Uncomment all commented-out lines (comment char: `#`)
 ```
 cat script.sh | vims -e '^\s*#' '^x'
 ```
+
+- `^\s*#` - Work on lines with whitespace followed by a comment char, followed by anything
+- `^x` - Go to the first non-whitespace character, and delete it
+
+## Example 7
+
+
+Delete the first word of each line and put it at the end:
+
+```
+cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
+```
+
+- `^[A-Za-z]` - Only work on lines that start with an alphabetical character
+- `\"kdw` - Delete the word under the cursor and put it in register `k`
+- `A \<esc>` - Start insert mode at front of line, type a space, hit escape key
+- `\"kp` - Paste from the register `k`
 
 # Credit
 
