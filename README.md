@@ -85,9 +85,8 @@ cat script.sh | vims -r 'foo' 'A # Comment'
 ```
 
 - `-r` - Work on all lines not matching regex
-- `foo` - Match the word "foo"
-- `A # Comment` - At the start of the line, type a space, then a comment char,
-    then " Comment"
+- `foo` - Match all lines with the word "foo"
+- `A # Comment` - At the end of the line, type " # Comment"
 
 ## Example 4
 
