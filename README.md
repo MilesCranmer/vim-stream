@@ -32,7 +32,8 @@ To install,
 put `vims` somewhere on your path, e.g., `/usr/bin`.
 
 ```
-{command} | vims [-n|--silent] [-d|--disable-vimrc] [-e|--exe-mode]
+{command} | vims [-n|--silent] [-d|--disable-vimrc]
+                 [-e|--exe-mode] [-r|--inverse-exe-mode]
                  [ <args>... ]
 ```
 
@@ -46,15 +47,18 @@ where `$1` is the first arg of a pair,
 and `$2` is the last arg of a pair. This lets you type non-text characters,
 like `\<esc>`, `\<c-o>`, etc.
 
+Inverse exe mode is done with the `-r|--inverse-exe-mode` flag, which
+does the same as exe mode, but only on lines NOT matching the regex.
+
+Your default vimrc should be enabled by default, turn it off with
+`-d|--disable-vimrc`.
+
 ## Example 1
 To delete every line that matches "foo", and print:
 
 ```
 cat myfile.txt | vims '%g/foo/d'
 ```
-
-Your default vimrc should be enabled by default, turn it off with
-`-d|--disable-vimrc`.
 
 ## Example 2
 Delete blank lines, then lower-case everything:
@@ -70,6 +74,19 @@ cat mylog.log | vims -e '^\s*$' 'dd' '.' 'Vu'
 
 ## Example 3
 
+Add a comment (`#`) on every line NOT containing foo:
+
+```
+cat script.sh | vims -r 'foo' 'A # Comment'
+```
+
+- `-r` - Work on all lines not matching regex
+- `foo` - Match the word "foo"
+- `A # Comment` - At the start of the line, type a space, then a comment char,
+    then " Comment"
+
+## Example 4
+
 Say you want to move all Python classes to the bottom of a file:
 ```
 cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
@@ -80,18 +97,18 @@ which uses "exe" mode to move all classes to the bottom of the file:
      - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
      - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
      
-## Example 4
+## Example 5
 
-Only print the last 4 lines (just like tail)
+Only print the last 5 lines (just like tail)
 
 ```
-cat txt | vims -n '$-4,$p'
+cat txt | vims -n '$-3,$p'
 ```
 - `-n` - Don't print all lines automatically
-- `$-4,$` - A range extending from 4th last line to the last line
+- `$-3,$` - A range extending from 4th last line to the last line
 - `p` - Print
 
-## Example 5
+## Example 6
 
 Replace all multi-whitespace sequences with a single space:
 
@@ -99,7 +116,7 @@ Replace all multi-whitespace sequences with a single space:
 cat txt | vims '%s/\s\+/ /g'
 ```
 
-## Example 6
+## Example 7
 
 Uncomment all commented-out lines (comment char: `#`)
 
@@ -110,7 +127,7 @@ cat script.sh | vims -e '^\s*#' '^x'
 - `^\s*#` - Work on lines with whitespace followed by a comment char, followed by anything
 - `^x` - Go to the first non-whitespace character, and delete it
 
-## Example 7
+## Example 8
 
 
 Delete the first word of each line and put it at the end:
@@ -127,8 +144,8 @@ cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
 # Credit
 
 I innovated very little (none) on this script, I basically took a Google Groups
-[posting](https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb4/Ir0faiNaFZwJ),
-then had the nice folks on [SO](https://stackoverflow.com/questions/44745046/bash-pass-all-arguments-exactly-as-they-are-to-a-function-and-prepend-a-flag-on)
+[posting](https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb5/Ir0faiNaFZwJ),
+then had the nice folks on [SO](https://stackoverflow.com/questions/44745047/bash-pass-all-arguments-exactly-as-they-are-to-a-function-and-prepend-a-flag-on)
 help me put it together.
 
 Thanks!
