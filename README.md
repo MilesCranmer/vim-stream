@@ -94,8 +94,8 @@ Say you want to move all Python classes to the bottom of a file:
 ```
 cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
 ```
-which uses "exe" mode to move all classes to the bottom of the file:
- - `'^class' 'V/^\S\<enter>kdGp'` becomes `'%g/^class/exe "norm V/^\S\<enter>kdGp"'`
+
+- `'^class' 'V/^\S\<enter>kdGp'` becomes `'%g/^class/exe "norm V/^\S\<enter>kdGp"'`
      - `%g/^class/` - Every line starting with "class"
      - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
      - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
@@ -105,10 +105,10 @@ which uses "exe" mode to move all classes to the bottom of the file:
 Only print the last 5 lines (just like tail)
 
 ```
-cat txt | vims -n '$-3,$p'
+cat txt | vims -n '$-5,$p'
 ```
 - `-n` - Don't print all lines automatically
-- `$-3,$` - A range extending from 4th last line to the last line
+- `$-5,$` - A range extending from 5th last line to the last line
 - `p` - Print
 
 ## Example 6
@@ -118,6 +118,15 @@ Replace all multi-whitespace sequences with a single space:
 ```
 cat txt | vims '%s/\s\+/ /g'
 ```
+
+Which can also be done in exe mode:
+
+```
+cat txt | vims -e '.' ':s/\\s\\+/ /g\<enter>'
+```
+
+Note the double back-slashes needed (only in the second string of a pair in an exe command!)
+when you are typing a character like `\s`, but not like `\<enter>`.
 
 ## Example 7
 
