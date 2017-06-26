@@ -5,12 +5,12 @@ editing with vim feels more natural than
 sed or awk:
 
 ```
-cat myfile.txt | vims '3,4norm yyGp' '1d'
+cat myfile.txt | vims '3,4norm yyGp' '%g/foo/d'
 ```
 which means: 
- - `3,4norm yyGp` on the 3rd and 4th line, enter normal mode and
+ - `3,4norm yyGp` - on the 3rd and 4th line, enter normal mode and
 copy the line to the bottom of the file.
- - `1d` delete line 1
+ - `%g/foo/d` - delete every line containing "`foo`"
 
 
 You can also use "exe" mode (flag `-e`):
@@ -54,11 +54,14 @@ Your default vimrc should be enabled by default, turn it off with
 `-d|--disable-vimrc`.
 
 ## Example 1
-To delete every line that matches "foo", and print:
+Delete lines 10-15, and print the remainder:
 
 ```
-cat myfile.txt | vims '%g/foo/d'
+cat myfile.txt | vims '10,15d'
 ```
+
+- `10,15` - A range from 10-15 - see `:help :range` in vim for a huge number of options.
+- `d` - The delete (from ex) command - see `:help :d` in vim.
 
 ## Example 2
 Delete blank lines, then lower-case everything:
@@ -67,6 +70,7 @@ Delete blank lines, then lower-case everything:
 cat mylog.log | vims -e '^\s*$' 'dd' '.' 'Vu'
 ```
 
+- `-e` - Turn on exe mode
 - `^\s*$` - Line only containing whitespace
 - `dd` - Delete it.
 - `.` - Line containing anything (Every pair of arguments triggers a new `exe` command)
