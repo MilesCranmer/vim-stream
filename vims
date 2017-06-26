@@ -5,6 +5,7 @@ vim_cmds=()
 
 PRINT_ALL=1
 DISABLE_VIMRC=0
+EXE_MODE=0
 
 while (($# > 0)); do
     arg="$1"
@@ -15,12 +16,28 @@ while (($# > 0)); do
         -d|--disable-vimrc)
             DISABLE_VIMRC=1
             ;;
+        -e|--exe-mode)
+            EXE_MODE=1
+            ;;
         *)
             # unknown option
-            vim_cmds+=(-c "$1")
+            break
             ;;
     esac
     shift
+done
+
+while (($# > 0)); do
+    if [ "$EXE_MODE" -eq "0" ]; then
+        vim_cmds+=(-c "$1")
+        shift
+    else
+        SEARCH="$1"
+        CMD="$2"
+        vim_cmds+=(-c "%g/${SEARCH}/exe \"norm ${CMD}\"")
+        shift
+        shift
+    fi
 done
 
 # Headless vim which exits after printing all lines
@@ -34,3 +51,4 @@ if [ "$DISABLE_VIMRC" -eq "1" ]; then
 fi
 
 vim - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2
+
