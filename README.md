@@ -157,7 +157,7 @@ cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
 
 I innovated very little (none) on this script, I basically took a Google Groups
 [posting](https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb5/Ir0faiNaFZwJ),
-then had the nice folks on [SO](https://stackoverflow.com/questions/44745047/bash-pass-all-arguments-exactly-as-they-are-to-a-function-and-prepend-a-flag-on)
+then had the nice folks on [SO](https://stackoverflow.com/questions/44745046/bash-pass-all-arguments-exactly-as-they-are-to-a-function-and-prepend-a-flag-on)
 help me put it together.
 
 Thanks!
