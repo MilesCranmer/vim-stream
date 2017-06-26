@@ -12,17 +12,19 @@ which means:
 copy the line to the bottom of the file.
  - `1d` delete line 1
 
-Or, using [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g),
-```
-cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
-```
-which uses "exe" mode to move all classes to the bottom of the file:
- - `'^class' 'V/^\S\<enter>kdGp'` becomes `'%g/^class/exe "norm V/^\S\<enter>kdGp"'`
-     - `%g/^class/` - Every line starting with "class"
-     - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
-     - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
 
+You can also use "exe" mode (flag `-e`):
+for example, to comment out in C++
+every line containing `"my_bad_var"`,
+then delete the line above it:
 
+```
+cat my_script.cpp | vims -e 'my_bad_var' 'I//\<esc>kdd'
+```
+
+Which translates to `vims '%g/my_bad_var/exe "norm I//\<esc>kdd"'` - the `I` being the command
+to start insert at the start of the line, and `//` being the comment sequence.
+`\<esc>kdd` pushes the escape key, moves up a line, then deletes the line.
 
 # Usage
 
@@ -52,14 +54,15 @@ Trigger "exe" mode using the `-e|--exe-mode` flag, which creates macros
 for `'%g/$1/exe "norm $2"'`, where `$1` is the first arg of a pair,
 and `$2` is the last arg of a pair.
 
-For example, to comment out in C++
-every line containing `"my_bad_var"`,
-
+Using [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g),
 ```
-cat my_script.cpp | vims -e 'my_bad_var' 'I//'
+cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
 ```
-
-Which translates to `vims '%g/my_bad_var/exe "norm I//"'`.
+which uses "exe" mode to move all classes to the bottom of the file:
+ - `'^class' 'V/^\S\<enter>kdGp'` becomes `'%g/^class/exe "norm V/^\S\<enter>kdGp"'`
+     - `%g/^class/` - Every line starting with "class"
+     - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
+     - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
 
 # Credit
 
