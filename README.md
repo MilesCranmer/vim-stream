@@ -14,11 +14,12 @@ copy the line to the bottom of the file.
 
 Or, using [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g),
 ```
-cat myscript.py | vims '%g/^class/exe "norm V/^\S\<enter>kdGp"'
+cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
 ```
-which moves all classes to the bottom of the file:
- - `%g/^class/` - Every line starting with "class"
- - `exe "norm V/^\S\<enter>kdGp"` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom
+which uses "exe" mode to moves all classes to the bottom of the file:
+ - `'^class' 'V/^\S\<enter>kdGp'` becomes '%g/^class/exe "norm V/^\S\<enter>kdGp"'
+     - `%g/^class/` - Every line starting with "class"
+     - `exe "norm V/^\S\<enter>kdGp"` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom
 
 
 
@@ -28,7 +29,8 @@ To install,
 put `vims` somewhere on your path, e.g., `/usr/bin`.
 
 ```
-{command} | vims [-n|--silent] [-d|--disable-vimrc] [ <args>... ]
+{command} | vims [-n|--silent] [-d|--disable-vimrc] [-e|--exe-mode]
+                 [ <args>... ]
 ```
 
 Call `vims` on piped input, providing a list of arguments that you
@@ -44,6 +46,19 @@ cat myfile.txt | vims '%g/foo/d'
 
 Your default vimrc should be enabled by default, turn it off with
 `-d|--disable-vimrc`.
+
+Trigger "exe" mode using the `-e|--exe-mode` flag, which creates macros
+for `'%g/$1/exe "norm $2"'`, where `$1` is the first arg of a pair,
+and `$2` is the last arg of a pair.
+
+For example, to comment out in C++
+every line containing `"my_bad_var"`,
+
+```
+cat my_script.cpp | vims -e 'my_bad_var' 'I//'
+```
+
+Which translates to `vims '%g/my_bad_var/exe "norm I//"'`.
 
 # Credit
 
