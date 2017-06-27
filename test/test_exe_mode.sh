@@ -27,6 +27,7 @@ assert ()                 #  If condition false,
 
 cat test_files/python.py | ../vims -e '^\s\+def __init__' 'V/^\\s\\+def\<enter>kdGp' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_init_at_bottom.py)
+rm .tmp
 assert [ $DIFF == "" ] $LINENO 
 echo "+ test to move init to bottom passed"
 echo "+ test_exe_mode all passed"
