@@ -1,0 +1,83 @@
+NAME
+        vims - vim stream
+
+SYNOPSIS
+        {command} | vims [-n|--quiet] [-d|--disable-vimrc]
+                         [-e|--exe-mode] [-r|--inverse-exe-mode]
+                         [-s|--simple-mode]
+                         [ <args>... ]
+        
+
+DESCRIPTION
+        vims is a vim wrapper to conveniently run vim commands on STDIN. In
+        some sense, it is equivalent to sed or ex, but also gives you access
+        to the regular movement commands in vim, which make some commands more
+        concise, and complex procedures more natural. It also loads your .vimrc
+        file, so you can use macros.
+
+        Call vims on piped input, providing a list of arguments that you
+        would otherwise use in vim command-line mode. All lines not deleted are
+        printed by default after your commands are ran.
+
+        vims has several modes to provide mappings to common command-line
+        sequences. These are outlined in the next section.
+
+OPTIONS
+
+        -n, --quiet, --silent
+            Turn off the default option to print all lines of STDIN which are
+            not deleted at the end of the command sequence. Lines can still be
+            printed manually, through the :p vim command.
+
+        -d, --disable-vimrc
+            Turn on the -u NONE flag when calling vim, which turns off any
+            .vimrc file you may have. Use this for greater portability.
+
+        -e, --exe-mode
+            This is a vims "mode", which is a specific mapping of args to vim
+            command-line. When using a mode, you are no longer writing regular
+            command-line sequences, but args that will be mapped inside of one.
+
+            vims modes are non-exitable: every arg will be mapped to your
+            mode. To run a command outside of the mode, you will have to
+            pipe to another vims call.
+
+            For exe mode, vims expects pairs of args, like so:
+
+                vims -e 'regex' 'lkjhA regular text \<esc>dd'
+
+            This will be translated to:
+
+                vims '%g/regex/exe "norm lkjhA regular text \<esc>dd"'
+
+            Which, on every line matching 'regex', starts running the regular
+            vim commands you have provided in the second arg. Keyboard
+            commands without text equivalent require being written as \<enter>
+            or equivalent, while regular backslashed chars require a double
+            backslash, and quotes require a single backslash, e.g.,
+
+                \\s
+                \"
+
+            Which are interpreted as \s and ", respectively, after being read
+            into vim.
+
+            Typing more arguments (you need an even number of them!) will
+            create more command sequences, in the order:
+
+                vims '%g/$1/exe "norm $2"' '%g/$3/exe "norm $4"'
+
+        -r, --inverse-exe-mode
+            The exact same as exe mode, but ran on lines which do NOT match
+            the regex. In this case, the arguments are translated to:
+
+                vims '%v/$1/exe "norm $2"' '%v/$3/exe "norm $4"'
+
+            Which is the inverse matching command-line call.
+
+ENVIRONMENT
+        Make sure the vims executable is in a directory listed on your PATH
+        environment variable. Otherwise, you can run it by executing it
+        manually, e.g.,
+
+            echo "" | $GIT_DIR/vims -s 'IHello world!'
