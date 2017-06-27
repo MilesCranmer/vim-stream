@@ -1,4 +1,6 @@
-# vims
+# vims 
+
+[![Build Status](https://travis-ci.org/MilesCranmer/vim-stream.svg?branch=master)](https://travis-ci.org/MilesCranmer/vim-stream)
 
 Do you live in a vim editor? Then, maybe, stream
 editing with vim feels more natural than
