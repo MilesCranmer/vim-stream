@@ -45,31 +45,31 @@ echo "+ test $TEST_NUM to do one long 'simple' command passed"
 
 cat test_files/python.py | ../vims -s 'x' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_minus_one_char.py)
-TEST_NUM=3
+TEST_NUM=4
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to do one short 'simple' command passed"
 
 cat test_files/python.py | ../vims -e '.*' ':m0\<enter>' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_reversed.py)
-TEST_NUM=4
+TEST_NUM=5
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to reverse a file with exe passed"
 
 cat test_files/python.py | ../vims '%g/.*/m0' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_reversed.py)
-TEST_NUM=5
+TEST_NUM=6
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to reverse a file in normal mode passed"
 
 cat test_files/numbers.txt | ../vims -e '^5$' 'dd' -t '%g/^3$/t$' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/numbers_5_gone_3_bottom.txt)
-TEST_NUM=6
+TEST_NUM=7
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to turn back off exe mode passed"
 
 cat test_files/numbers.txt | ../vims -e '^5$' 'dd' -s ':%g/^3$/t$\<enter>' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/numbers_5_gone_3_bottom.txt)
-TEST_NUM=7
+TEST_NUM=8
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to run multi-mode commands passed"
 
