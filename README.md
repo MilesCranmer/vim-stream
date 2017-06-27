@@ -34,7 +34,7 @@ put `vims` somewhere on your path, e.g., `/usr/bin`.
 ```
 {command} | vims [-n|--quiet] [-d|--disable-vimrc]
                  [-e|--exe-mode] [-r|--inverse-exe-mode]
-                 [-s|--simple-mode]
+                 [-s|--simple-mode] [-t|--turn-off-mode]
                  [ <args>... ]
 ```
 
@@ -55,6 +55,10 @@ Use simple mode with the `-s|--simple-mode` flag, which is as vanilla
 as it gets. This translates every passed argument to: `exe "norm $1"`, meaning
 that you can run commands just like you opened the editor, starting
 at line 1. Use the same backslashes (`\<enter>`) as you do for exe mode.
+
+Modes are activated for all the proceeding args. You can to switch
+modes partway, by calling the flag for the other mode you want, or you
+can turn off any activated mode with `-t|--turn-off-mode`.
 
 Your default vimrc should be enabled by default, turn it off with
 `-d|--disable-vimrc`.

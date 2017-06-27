@@ -32,7 +32,7 @@ while (($# > 0)); do
             SIMPLE_MODE=1
             shift
             ;;
-        -m|--no-mode)
+        -t|--turn-off-mode)
             SIMPLE_MODE=0
             INVERSE_EXE_MODE=0
             EXE_MODE=0

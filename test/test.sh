@@ -54,7 +54,7 @@ DIFF=$(diff -b .tmp test_files/python_reversed.py)
 assert "$DIFF" $LINENO 5
 echo "+ test to reverse a file in normal mode passed"
 
-cat test_files/numbers.txt | ../vims -e '^5$' 'dd' -m '%g/^3$/t$' | cat > .tmp
+cat test_files/numbers.txt | ../vims -e '^5$' 'dd' -t '%g/^3$/t$' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/numbers_5_gone_3_bottom.txt)
 assert "$DIFF" $LINENO 6
 echo "+ test to turn back off exe mode"
