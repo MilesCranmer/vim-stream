@@ -56,7 +56,7 @@ as it gets. This translates every passed argument to: `exe "norm $1"`, meaning
 that you can run commands just like you opened the editor, starting
 at line 1. Use the same backslashes (`\<enter>`) as you do for exe mode.
 
-Modes are activated for all the proceeding args. You can to switch
+Modes are activated for all the proceeding args. You can switch
 modes partway, by calling the flag for the other mode you want, or you
 can turn off any activated mode with `-t|--turn-off-mode`.
 
@@ -87,6 +87,19 @@ cat mylog.log | vims -e '^\s*$' 'dd' '.' 'Vu'
 - `Vu` - Select the line, then lower-case all alphabetical characters
 
 ## Example 3
+Resolve all git conflicts by deleting the changes on HEAD (keep the bottom code):
+
+```
+cat my_conflict.cpp | vims -e '^=======$' 'V?^<<<<<<< \<enter>d' -t '%g/^>>>>>>> /d'
+```
+
+- `-e` - Turn on exe mode
+- `^=======$` - Match the middle bit of a git conflict
+- `V?^<<<<<<< \<enter>d` - Highlight the line, backward search to the top of the conflict, delete it.
+- `-t` - Turn off exe mode
+- `%g/^>>>>>>> /d` - Delete remaining conflict lines
+
+## Example 4
 
 Add a comment (`#`) on every line NOT containing foo:
 
@@ -98,7 +111,7 @@ cat script.sh | vims -r 'foo' 'A # Comment'
 - `foo` - Match all lines with the word "foo"
 - `A # Comment` - At the end of the line, type " # Comment"
 
-## Example 4
+## Example 5
 
 Say you want to move all Python classes to the bottom of a file:
 ```
@@ -110,7 +123,7 @@ cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
      - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
      - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
      
-## Example 5
+## Example 6
 
 Only print the last 6 lines (just like tail)
 
@@ -121,7 +134,7 @@ cat txt | vims -n '$-5,$p'
 - `$-5,$` - A range extending from 6th last line to the last line
 - `p` - Print
 
-## Example 6
+## Example 7
 
 Replace all multi-whitespace sequences with a single space:
 
@@ -138,7 +151,7 @@ cat txt | vims -e '.' ':s/\\s\\+/ /g\<enter>'
 Note the double back-slashes needed (only in the second string of a pair in an exe command!)
 when you are typing a character like `\s`, but not like `\<enter>`.
 
-## Example 7
+## Example 8
 
 Uncomment all commented-out lines (comment char: `#`)
 
@@ -149,7 +162,7 @@ cat script.sh | vims -e '^\s*#' '^x'
 - `^\s*#` - Work on lines with whitespace followed by a comment char, followed by anything
 - `^x` - Go to the first non-whitespace character, and delete it
 
-## Example 8
+## Example 9
 
 
 Delete the first word of each line and put it at the end:
@@ -163,7 +176,7 @@ cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
 - `A \<esc>` - Start insert mode at front of line, type a space, hit escape key
 - `\"kp` - Paste from the register `k`
 
-## Example 9
+## Example 10
 
 Run a super-vanilla long chain of commands in simple mode, starting from line 1 of a file:
 
@@ -177,7 +190,7 @@ cat python.py | vims -s '/^class\<enter>O# This class broke\<esc>Go\<enter># Thi
 - `# This file broke'` - Write at the end of the file: "# This file broke"
 
 
-## Example 10
+## Example 11
 
 Reverse a file:
 
