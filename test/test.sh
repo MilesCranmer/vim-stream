@@ -65,7 +65,13 @@ cat test_files/numbers.txt | ../vims -e '^5$' 'dd' -t '%g/^3$/t$' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/numbers_5_gone_3_bottom.txt)
 TEST_NUM=6
 assert "$DIFF" $LINENO $TEST_NUM
-echo "+ test $TEST_NUM to turn back off exe mode"
+echo "+ test $TEST_NUM to turn back off exe mode passed"
+
+cat test_files/numbers.txt | ../vims -e '^5$' 'dd' -s ':%g/^3$/t$\<enter>' | cat > .tmp
+DIFF=$(diff -b .tmp test_files/numbers_5_gone_3_bottom.txt)
+TEST_NUM=7
+assert "$DIFF" $LINENO $TEST_NUM
+echo "+ test $TEST_NUM to run multi-mode commands passed"
 
 echo "+ tests all passed"
 rm .tmp

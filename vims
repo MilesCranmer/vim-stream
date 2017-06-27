@@ -22,14 +22,20 @@ while (($# > 0)); do
             ;;
         -e|--exe-mode)
             EXE_MODE=1
+            SIMPLE_MODE=0
+            INVERSE_EXE_MODE=0
             shift
             ;;
         -r|--inverse-exe-mode)
             INVERSE_EXE_MODE=1
+            SIMPLE_MODE=0
+            EXE_MODE=0
             shift
             ;;
         -s|--simple-mode)
             SIMPLE_MODE=1
+            INVERSE_EXE_MODE=0
+            EXE_MODE=0
             shift
             ;;
         -t|--turn-off-mode)
