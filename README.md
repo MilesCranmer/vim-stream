@@ -98,10 +98,10 @@ cat script.sh | vims -r 'foo' 'A # Comment'
 
 Say you want to move all Python classes to the bottom of a file:
 ```
-cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
+cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
 ```
 
-- `'^class' 'V/^\S\<enter>kdGp'` becomes `'%g/^class/exe "norm V/^\S\<enter>kdGp"'`
+- `'^class' 'V/^\\S\<enter>kdGp'` becomes `'%g/^class/exe "norm V/^\S\<enter>kdGp"'`
      - `%g/^class/` - Every line starting with "class"
      - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
      - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
