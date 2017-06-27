@@ -172,6 +172,19 @@ cat python.py | vims -s '/^class\<enter>O# This class broke\<esc>Go\<enter># Thi
 - `\<esc>Go\<enter>` - Back to normal mode, make two blank lines at end of file
 - `# This file broke'` - Write at the end of the file: "# This file broke"
 
+
+## Example 10
+
+Reverse a file:
+
+```
+cat text.txt | vims '%g/.*/m0'
+```
+
+- `%g` - Work on all lines that match a pattern
+- `.*` - Matches all lines
+- `m0` - Move line to start of file
+
 # Credit
 
 I innovated very little (none) on this script, I basically took a Google Groups
