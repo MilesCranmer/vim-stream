@@ -28,6 +28,14 @@ Which translates to `vims '%g/my_bad_var/exe "norm I//\<esc>kdd"'` - the `I` bei
 to start insert at the start of the line, and `//` being the comment sequence.
 `\<esc>kdd` pushes the escape key, moves up a line, then deletes the line.
 
+```
+> echo 'Hello World!' | vims -s 'ea Beautiful'
+Hello Beautiful World!
+```
+
+- `-s` - Turn on simple mode (normal vim commands, start at char 0, line 0)
+- `ea` - Start inserting after end of first word
+
 # Usage/Examples
 
 To install,
