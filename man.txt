@@ -68,12 +68,33 @@ OPTIONS
                 vims '%g/$1/exe "norm $2"' '%g/$3/exe "norm $4"'
 
         -r, --inverse-exe-mode
-            The exact same as exe mode, but ran on lines which do NOT match
-            the regex. In this case, the arguments are translated to:
+            The exact same as exe mode, but ran on lines which do NOT match the
+            regex. In this case, the arguments are translated to:
 
-                vims '%v/$1/exe "norm $2"' '%v/$3/exe "norm $4"'
+                vims '%v/$1/exe "norm $2"' '%v/$3/exe "norm $4"' ...
 
             Which is the inverse matching command-line call.
+
+        -s, --simple-mode
+            This flag executes commands you give it with the translation:
+
+                vims 'exe "norm gg$1"' 'exe "norm gg$2"' ...
+
+            Meaning: this mode is equivalent to dumping the stream to disk,
+            opening vim on it, and then just recording all the exact commands
+            you type. This is simple mode because there are no special
+            mappings: it's just plain vim. In fact, if you have a keyboard
+            logger, you could probably just dump the exact keys to a bash
+            string, and put them into:
+
+                vims -s 'jkddGp.......'
+
+            And it would have the same result. This goes for registers, special
+            command-line functions, jumping to regex, etc.
+
+            However, just like with exe mode, you will have to follow the same
+            backslash rules, e.g., \<esc> and \\s to hit the escape key, and
+            write a \s, respectively.
 
 ENVIRONMENT
         Make sure the vims executable is in a directory listed on your PATH
