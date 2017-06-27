@@ -4,7 +4,7 @@ NAME
 SYNOPSIS
         {command} | vims [-n|--quiet] [-d|--disable-vimrc]
                          [-e|--exe-mode] [-r|--inverse-exe-mode]
-                         [-s|--simple-mode]
+                         [-s|--simple-mode] [-t|--turn-off-mode]
                          [ <args>... ]
         
 
@@ -39,8 +39,9 @@ OPTIONS
             command-line sequences, but args that will be mapped inside of one.
 
             vims modes are non-exitable: every arg will be mapped to your
-            mode. To run a command outside of the mode, you will have to
-            pipe to another vims call.
+            mode. To run a command outside of the mode, you can call the
+            -t flag to turn off the current mode, or the flag for turning on
+            the mode you want.
 
             For exe mode, vims expects pairs of args, like so:
 
@@ -95,6 +96,14 @@ OPTIONS
             However, just like with exe mode, you will have to follow the same
             backslash rules, e.g., \<esc> and \\s to hit the escape key, and
             write a \s, respectively.
+
+        -t|--turn-off-mode
+            Turn off all modes, if they were on previously. This lets you
+            resort to normal vims commands, like:
+
+                '%g/foo/d'
+
+            And so on.
 
 ENVIRONMENT
         Make sure the vims executable is in a directory listed on your PATH
