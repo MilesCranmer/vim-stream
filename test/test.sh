@@ -22,4 +22,9 @@ DIFF=$(diff -b .tmp test_files/python_init_at_bottom.py)
 rm .tmp
 assert [ $DIFF == "" ] $LINENO 
 echo "+ test to move init to bottom passed"
-echo "+ test_exe_mode all passed"
+cat test_files/python.py | ../vims -n '$-3,$p' | cat > .tmp
+DIFF=$(diff -b .tmp test_files/python_last_4_lines.py)
+rm .tmp
+assert [ $DIFF == "" ] $LINENO 
+echo "+ test to print last 4 lines passed"
+echo "+ tests all passed"
