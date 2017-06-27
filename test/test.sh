@@ -34,5 +34,15 @@ DIFF=$(diff -b .tmp test_files/python_with_extra_comments.py)
 assert "$DIFF" $LINENO 2
 echo "+ test to do one long 'simple' command passed"
 
+cat test_files/python.py | ../vims -e '.*' ':m0\<enter>' | cat > .tmp
+DIFF=$(diff -b .tmp test_files/python_reversed.py)
+assert "$DIFF" $LINENO 0
+echo "+ test to reverse a file with exe passed"
+
+cat test_files/python.py | ../vims '%g/.*/m0' | cat > .tmp
+DIFF=$(diff -b .tmp test_files/python_reversed.py)
+assert "$DIFF" $LINENO 0
+echo "+ test to reverse a file in normal mode passed"
+
 echo "+ tests all passed"
 rm .tmp
