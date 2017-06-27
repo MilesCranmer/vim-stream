@@ -108,13 +108,13 @@ cat myscript.py | vims -e '^class' 'V/^\S\<enter>kdGp'
      
 ## Example 5
 
-Only print the last 5 lines (just like tail)
+Only print the last 6 lines (just like tail)
 
 ```
 cat txt | vims -n '$-5,$p'
 ```
 - `-n` - Don't print all lines automatically
-- `$-5,$` - A range extending from 5th last line to the last line
+- `$-5,$` - A range extending from 6th last line to the last line
 - `p` - Print
 
 ## Example 6
@@ -167,7 +167,7 @@ Run a super-vanilla long chain of commands in simple mode, starting from line 1 
 cat python.py | vims -s '/^class\<enter>O# This class broke\<esc>Go\<enter># This file broke'
 ```
 
-- '/^class\<enter>` - Find the first class, and go to it
+- `/^class\<enter>` - Find the first class, and go to it
 - `O# This class broke` - Type above it: "# This class broke"
 - `\<esc>Go\<enter>` - Back to normal mode, make two blank lines at end of file
 - `# This file broke'` - Write at the end of the file: "# This file broke"
