@@ -13,7 +13,8 @@ assert ()
     then
         echo -n "- test assertion failed!"
         echo -n " test $3, line $POINTED_LINE_NO, "
-        echo " diff: $1"
+        echo "diff between output and expected:"
+        echo "$1"
         exit $E_ASSERT_FAILED
     fi
 }
