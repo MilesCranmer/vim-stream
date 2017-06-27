@@ -19,34 +19,39 @@ assert ()
     fi
 }
 
+cat test_files/python.py | ../vims '' > .tmp
+DIFF=$(diff -b .tmp test_files/python.py)
+assert "$DIFF" $LINENO 0
+echo "+ test to do a non-edit passed"
+
 cat test_files/python.py | ../vims -e '^\s\+def __init__' 'V/^\\s\\+def\<enter>kdGp' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_init_at_bottom.py)
-assert "$DIFF" $LINENO 0
+assert "$DIFF" $LINENO 1
 echo "+ test to move init to bottom passed"
 
 cat test_files/python.py | ../vims -n '$-3,$p' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_last_4_lines.py)
-assert "$DIFF" $LINENO 1
+assert "$DIFF" $LINENO 2
 echo "+ test to print last 4 lines passed"
 
 cat test_files/python.py | ../vims -s '/^class\<enter>O# This class is for Bifrost\<esc>Go\<enter># This file does not run!' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_with_extra_comments.py)
-assert "$DIFF" $LINENO 2
+assert "$DIFF" $LINENO 3
 echo "+ test to do one long 'simple' command passed"
 
 cat test_files/python.py | ../vims -s 'x' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_minus_one_char.py)
-assert "$DIFF" $LINENO 2
+assert "$DIFF" $LINENO 3
 echo "+ test to do one short 'simple' command passed"
 
 cat test_files/python.py | ../vims -e '.*' ':m0\<enter>' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_reversed.py)
-assert "$DIFF" $LINENO 0
+assert "$DIFF" $LINENO 4
 echo "+ test to reverse a file with exe passed"
 
 cat test_files/python.py | ../vims '%g/.*/m0' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_reversed.py)
-assert "$DIFF" $LINENO 0
+assert "$DIFF" $LINENO 5
 echo "+ test to reverse a file in normal mode passed"
 
 echo "+ tests all passed"
