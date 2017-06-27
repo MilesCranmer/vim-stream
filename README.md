@@ -32,7 +32,7 @@ To install,
 put `vims` somewhere on your path, e.g., `/usr/bin`.
 
 ```
-{command} | vims [-n|--silent] [-d|--disable-vimrc]
+{command} | vims [-n|--quiet] [-d|--disable-vimrc]
                  [-e|--exe-mode] [-r|--inverse-exe-mode]
                  [-s|--simple-mode]
                  [ <args>... ]
@@ -40,7 +40,7 @@ put `vims` somewhere on your path, e.g., `/usr/bin`.
 
 Call `vims` on piped input, providing a list of arguments that you
 would use in vim command-line mode. All lines not deleted are printed
-by default, but you can turn this off with a `-n|--silent` flag.
+by default, but you can turn this off with a `-n|--quiet` flag.
 
 Trigger "exe" mode using the `-e|--exe-mode` flag, which creates macros
 for `'%g/$1/exe "norm $2"'` (see [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g)),
