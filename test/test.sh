@@ -29,5 +29,10 @@ DIFF=$(diff -b .tmp test_files/python_last_4_lines.py)
 assert "$DIFF" $LINENO 1
 echo "+ test to print last 4 lines passed"
 
+cat test_files/python.py | ../vims -s '/^class\<enter>O# This class is for Bifrost\<esc>Go\<enter># This file does not run!' | cat > .tmp
+DIFF=$(diff -b .tmp test_files/python_with_extra_comments.py)
+assert "$DIFF" $LINENO 2
+echo "+ test to do one long 'simple' command passed"
+
 echo "+ tests all passed"
 rm .tmp

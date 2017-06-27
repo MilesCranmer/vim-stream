@@ -34,6 +34,7 @@ put `vims` somewhere on your path, e.g., `/usr/bin`.
 ```
 {command} | vims [-n|--silent] [-d|--disable-vimrc]
                  [-e|--exe-mode] [-r|--inverse-exe-mode]
+                 [-s|--simple-mode]
                  [ <args>... ]
 ```
 
@@ -49,6 +50,11 @@ like `\<esc>`, `\<c-o>`, etc.
 
 Inverse exe mode is done with the `-r|--inverse-exe-mode` flag, which
 does the same as exe mode, but only on lines NOT matching the regex.
+
+Use simple mode with the `-s|--simple-mode` flag, which is as vanilla
+as it gets. This translates every passed argument to: `exe "norm $1"`, meaning
+that you can run commands just like you opened the editor, starting
+at line 1. Use the same backslashes (`\<enter>`) as you do for exe mode.
 
 Your default vimrc should be enabled by default, turn it off with
 `-d|--disable-vimrc`.
@@ -152,6 +158,19 @@ cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
 - `\"kdw` - Delete the word under the cursor and put it in register `k`
 - `A \<esc>` - Start insert mode at front of line, type a space, hit escape key
 - `\"kp` - Paste from the register `k`
+
+## Example 9
+
+Run a super-vanilla long chain of commands in simple mode, starting from line 1 of a file:
+
+```
+cat python.py | vims -s '/^class\<enter>O# This class broke\<esc>Go\<enter># This file broke'
+```
+
+- '/^class\<enter>` - Find the first class, and go to it
+- `O# This class broke` - Type above it: "# This class broke"
+- `\<esc>Go\<enter>` - Back to normal mode, make two blank lines at end of file
+- `# This file broke'` - Write at the end of the file: "# This file broke"
 
 # Credit
 
