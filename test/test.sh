@@ -34,6 +34,11 @@ DIFF=$(diff -b .tmp test_files/python_with_extra_comments.py)
 assert "$DIFF" $LINENO 2
 echo "+ test to do one long 'simple' command passed"
 
+cat test_files/python.py | ../vims -s 'x' | cat > .tmp
+DIFF=$(diff -b .tmp test_files/python_minus_one_char.py)
+assert "$DIFF" $LINENO 2
+echo "+ test to do one short 'simple' command passed"
+
 cat test_files/python.py | ../vims -e '.*' ':m0\<enter>' | cat > .tmp
 DIFF=$(diff -b .tmp test_files/python_reversed.py)
 assert "$DIFF" $LINENO 0

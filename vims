@@ -53,7 +53,7 @@ while (($# > 0)); do
         shift
     elif [ "$EXE_MODE" -eq "0" ] && [ "$INVERSE_EXE_MODE" -eq "0" ] && [ "$SIMPLE_MODE" -eq "1" ]; then
         CMD="$1"
-        vim_cmds+=(-c ":exe \"norm ""${CMD}""\"")
+        vim_cmds+=(-c ":exe \"norm gg""${CMD}""\"")
         shift
     else
         echo "Mode conflict for vims! Please select only one mode."
