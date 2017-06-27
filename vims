@@ -57,7 +57,7 @@ while (($# > 0)); do
         shift
     else
         echo "Mode conflict for vims! Please select only one mode."
-        echo "Modes enabled: exe-mode? $EXE_MODE, inverse-exe-mode? $INVERSE_EXE_MODE, simple? $SIMPLE_MODE"
+        echo "Modes enabled: exe-mode? $EXE_MODE, inverse-exe-mode? $INVERSE_EXE_MODE, simple-mode? $SIMPLE_MODE"
         exit 1
     fi
 done
