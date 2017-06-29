@@ -212,6 +212,20 @@ cat text.txt | vims '%g/.*/m0'
 - `.*` - Matches all lines
 - `m0` - Move line to start of file
 
+## Example 12
+
+Sort the output of `ls -l` by file size, using the
+unix command `sort` (which you can use inside vim):
+
+```
+ls -l | vims '1d' '%!sort -k5n'
+```
+
+- `1d` - Delete the first line of `ls -l`
+- `%!` - Call the following external command on all lines
+- `sort` - The unix sort command
+- `-k5n` - Sort by column 5, numerically
+
 # Credit
 
 I innovated very little (none) on this script, I basically took a Google Groups
