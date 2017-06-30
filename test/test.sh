@@ -73,5 +73,11 @@ TEST_NUM=8
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to run multi-mode commands passed"
 
+cat test_files/numbers.txt | ../vims -l '10\<c-x>' > .tmp
+DIFF=$(diff -b .tmp test_files/numbers_all_decreased.txt)
+TEST_NUM=9
+assert "$DIFF" $LINENO $TEST_NUM
+echo "+ test $TEST_NUM to execute command on every line passed"
+
 echo "+ tests all passed"
 rm .tmp
