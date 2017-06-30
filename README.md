@@ -45,6 +45,7 @@ put `vims` somewhere on your path, e.g., `/usr/bin`.
 {command} | vims [-n|--quiet] [-d|--disable-vimrc]
                  [-e|--exe-mode] [-r|--inverse-exe-mode]
                  [-s|--simple-mode] [-t|--turn-off-mode]
+                 [-l|--line-exe-mode]
                  [ <args>... ]
 ```
 
@@ -57,6 +58,9 @@ for `'%g/$1/exe "norm $2"'` (see [the power of `:g`](http://vim.wikia.com/wiki/P
 where `$1` is the first arg of a pair,
 and `$2` is the last arg of a pair. This lets you type non-text characters,
 like `\<esc>`, `\<c-o>`, etc.
+
+Likewise, `-l|--line-exe-mode` translates to `%g/.*/exe "norm$1"`, meaning
+it executes a command on ALL lines.
 
 Inverse exe mode is done with the `-r|--inverse-exe-mode` flag, which
 does the same as exe mode, but only on lines NOT matching the regex.
@@ -95,6 +99,12 @@ cat mylog.log | vims -e '^\s*$' 'dd' '.' 'Vu'
 - `dd` - Delete it.
 - `.` - Line containing anything (Every pair of arguments triggers a new `exe` command)
 - `Vu` - Select the line, then lower-case all alphabetical characters
+
+Or, with line exe mode (a shorthand for `.*`):
+
+```
+cat mylog.log | vims -e '^\s*$' 'dd' -l 'Vu'
+```
 
 ## Example 3
 Resolve all git conflicts by deleting the changes on HEAD (keep the bottom code):
