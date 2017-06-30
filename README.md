@@ -44,8 +44,8 @@ put `vims` somewhere on your path, e.g., `/usr/bin`.
 ```
 {command} | vims [-n|--quiet] [-d|--disable-vimrc]
                  [-e|--exe-mode] [-r|--inverse-exe-mode]
-                 [-s|--simple-mode] [-t|--turn-off-mode]
-                 [-l|--line-exe-mode]
+                 [-s|--simple-mode] [-l|--line-exe-mode]
+                 [-t|--turn-off-mode]
                  [ <args>... ]
 ```
 
@@ -105,6 +105,8 @@ Or, with line exe mode (a shorthand for `.*`):
 ```
 cat mylog.log | vims -e '^\s*$' 'dd' -l 'Vu'
 ```
+
+- `-l` - Turn off exe mode, turn on line exe mode
 
 ## Example 3
 Resolve all git conflicts by deleting the changes on HEAD (keep the bottom code):
