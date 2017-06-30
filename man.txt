@@ -68,9 +68,13 @@ OPTIONS
 
                 vims '%g/$1/exe "norm $2"' '%g/$3/exe "norm $4"'
 
+        -l, --line-exe-mode
+            Shorthand for `-e '.*'`, meaning it operates the same exe mapping
+            on ALL lines, regardless of what they contain.
+
         -r, --inverse-exe-mode
-            The exact same as exe mode, but ran on lines which do NOT match the
-            regex. In this case, the arguments are translated to:
+            Similar to exe mode, but ran on lines which do NOT match the regex.
+            In this case, the arguments are translated to:
 
                 vims '%v/$1/exe "norm $2"' '%v/$3/exe "norm $4"' ...
 
