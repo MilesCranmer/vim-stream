@@ -5,10 +5,7 @@ vim_cmds=()
 
 PRINT_ALL=1
 DISABLE_VIMRC=0
-EXE_MODE=0
-INVERSE_EXE_MODE=0
-SIMPLE_MODE=0
-LINE_EXE_MODE=0
+MODE=none
 
 while (($# > 0)); do
     arg="$1"
@@ -22,67 +19,52 @@ while (($# > 0)); do
             shift
             ;;
         -e|--exe-mode)
-            EXE_MODE=1
-            SIMPLE_MODE=0
-            INVERSE_EXE_MODE=0
-            LINE_EXE_MODE=0
+            MODE=exe
             shift
             ;;
         -r|--inverse-exe-mode)
-            INVERSE_EXE_MODE=1
-            SIMPLE_MODE=0
-            EXE_MODE=0
-            LINE_EXE_MODE=0
+            MODE=inverse-exe
             shift
             ;;
         -l|--line-exe-mode)
-            LINE_EXE_MODE=1
-            SIMPLE_MODE=0
-            INVERSE_EXE_MODE=0
-            EXE_MODE=0
+            MODE=line-exe
             shift
             ;;
         -s|--simple-mode)
-            SIMPLE_MODE=1
-            INVERSE_EXE_MODE=0
-            EXE_MODE=0
-            LINE_EXE_MODE=0
+            MODE=simple
             shift
             ;;
         -t|--turn-off-mode)
-            SIMPLE_MODE=0
-            INVERSE_EXE_MODE=0
-            EXE_MODE=0
-            LINE_EXE_MODE=0
+            MODE=none
             shift
             ;;
         *)
-            if [ "$EXE_MODE" -eq "0"  ] && [ "$INVERSE_EXE_MODE" -eq "0" ] && [ "$SIMPLE_MODE" -eq "0" ] && [ "$LINE_EXE_MODE" -eq "0" ]; then
+            if [ "$MODE" = "none" ]; then
                 vim_cmds+=(-c "$1")
                 shift
-            elif [ "$EXE_MODE" -eq "1" ] && [ "$INVERSE_EXE_MODE" -eq "0" ] && [ "$SIMPLE_MODE" -eq "0" ] && [ "$LINE_EXE_MODE" -eq "0" ]; then
+            elif [ "$MODE" = "exe" ]; then
                 SEARCH="$1"
                 CMD="$2"
                 vim_cmds+=(-c "%g/${SEARCH}/exe \"norm ${CMD}\"")
                 shift
                 shift
-            elif [ "$EXE_MODE" -eq "0" ] && [ "$INVERSE_EXE_MODE" -eq "1" ] && [ "$SIMPLE_MODE" -eq "0" ] && [ "$LINE_EXE_MODE" -eq "0" ]; then
+            elif [ "$MODE" = "inverse-exe" ]; then
                 SEARCH="$1"
                 CMD="$2"
                 vim_cmds+=(-c "%v/${SEARCH}/exe \"norm ${CMD}\"")
                 shift
                 shift
-            elif [ "$EXE_MODE" -eq "0" ] && [ "$INVERSE_EXE_MODE" -eq "0" ] && [ "$SIMPLE_MODE" -eq "1" ] && [ "$LINE_EXE_MODE" -eq "0" ]; then
+            elif [ "$MODE" = "simple" ]; then
                 CMD="$1"
                 vim_cmds+=(-c ":exe \"norm gg""${CMD}""\"")
                 shift
-            elif [ "$EXE_MODE" -eq "0" ] && [ "$INVERSE_EXE_MODE" -eq "0" ] && [ "$SIMPLE_MODE" -eq "0" ] && [ "$LINE_EXE_MODE" -eq "1" ]; then
+            elif [ "$MODE" = "line-exe" ]; then
                 CMD="$1"
                 vim_cmds+=(-c ":%g/.*/exe \"norm ""${CMD}""\"")
                 shift
             else
-                echo "Mode conflict for vims! Please select only one mode."
-                echo "Modes enabled: exe-mode? $EXE_MODE, inverse-exe-mode? $INVERSE_EXE_MODE, simple-mode? $SIMPLE_MODE, line-exe-mode? $LINE_EXE_MODE"
+                echo "Mode not known to vims! Please select a known mode."
+                echo "Mode selected: $MODE"
                 exit 1
             fi
             ;;
