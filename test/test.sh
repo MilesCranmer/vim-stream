@@ -79,5 +79,11 @@ TEST_NUM=9
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to execute command on every line passed"
 
+cat test_files/numbers.txt | ../vims -r '^1$' 'dd' > .tmp
+DIFF=$(diff -b .tmp test_files/numbers_delete_all_not_1.txt)
+TEST_NUM=10
+assert "$DIFF" $LINENO $TEST_NUM
+echo "+ test $TEST_NUM to delete all numbers not 1 passed"
+
 echo "+ tests all passed"
 rm .tmp
