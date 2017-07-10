@@ -8,67 +8,35 @@ DISABLE_VIMRC=0
 MODE=none
 
 while (($# > 0)); do
-    arg="$1"
-    case "$arg" in
-        -n|--silent|--quiet)
-            PRINT_ALL=0
-            shift
-            ;;
-        -d|--disable-vimrc)
-            DISABLE_VIMRC=1
-            shift
-            ;;
-        -e|--exe-mode)
-            MODE=exe
-            shift
-            ;;
-        -r|--inverse-exe-mode)
-            MODE=inverse-exe
-            shift
-            ;;
-        -l|--line-exe-mode)
-            MODE=line-exe
-            shift
-            ;;
-        -s|--simple-mode)
-            MODE=simple
-            shift
-            ;;
-        -t|--turn-off-mode)
-            MODE=none
-            shift
-            ;;
+    case "$1" in
+
+        -n|--silent|--quiet) PRINT_ALL=0;;
+
+        -d|--disable-vimrc)  DISABLE_VIMRC=1;;
+
+        -e|--exe-mode)         MODE=exe;;
+        -r|--inverse-exe-mode) MODE=inverse-exe;;
+        -l|--line-exe-mode)    MODE=line-exe;;
+        -s|--simple-mode)      MODE=simple;;
+        -t|--turn-off-mode)    MODE=none;;
+
         *)
-            if [ "$MODE" = "none" ]; then
-                vim_cmds+=(-c "$1")
-                shift
-            elif [ "$MODE" = "exe" ]; then
-                SEARCH="$1"
-                CMD="$2"
-                vim_cmds+=(-c "%g/${SEARCH}/exe \"norm ${CMD}\"")
-                shift
-                shift
-            elif [ "$MODE" = "inverse-exe" ]; then
-                SEARCH="$1"
-                CMD="$2"
-                vim_cmds+=(-c "%v/${SEARCH}/exe \"norm ${CMD}\"")
-                shift
-                shift
-            elif [ "$MODE" = "simple" ]; then
-                CMD="$1"
-                vim_cmds+=(-c ":exe \"norm gg""${CMD}""\"")
-                shift
-            elif [ "$MODE" = "line-exe" ]; then
-                CMD="$1"
-                vim_cmds+=(-c ":%g/.*/exe \"norm ""${CMD}""\"")
-                shift
-            else
-                echo "Mode not known to vims! Please select a known mode."
-                echo "Mode selected: $MODE"
-                exit 1
-            fi
+            case "$MODE" in
+
+                none)        vim_cmds+=(-c "$1");;
+                simple)      vim_cmds+=(-c ":exe \"norm gg""$1""\"");;
+                line-exe)    vim_cmds+=(-c ":%g/.*/exe \"norm ""$1""\"");;
+
+                exe)         vim_cmds+=(-c "%g/$1/exe \"norm $2\""); shift;;
+                inverse-exe) vim_cmds+=(-c "%v/$1/exe \"norm $2\""); shift;;
+
+            esac
             ;;
+
     esac
+
+    shift
+
 done
 
 # Headless vim which exits after printing all lines
