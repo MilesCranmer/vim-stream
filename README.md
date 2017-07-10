@@ -1,6 +1,6 @@
 # vims 
 
-[![Build Status](https://travis-ci.org/MilesCranmer/vim-stream.svg?branch=master)](https://travis-ci.org/MilesCranmer/vim-stream)
+[![Build Status](https://travis-ci.org/MilesCranmer/vim-stream.svg?branch=master)](https://travis-ci.org/MilesCranmer/vim-stream) | [![Codecov branch](https://img.shields.io/codecov/c/github/MilesCranmer/vim-stream/master.svg)](https://codecov.io/gh/MilesCranmer/vim-stream)
 
 Do you live in a vim editor? Then, maybe, stream
 editing with vim feels more natural than
