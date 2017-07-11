@@ -1,10 +1,11 @@
-#!/bin/bash
+#!/bin/bash -x
 # The argument fixes were supplied by John Kugelman
 # https://stackoverflow.com/a/44745698/2689923
 vim_cmds=()
 
 PRINT_ALL=1
-DISABLE_VIMRC=0
+ENABLE_VIMRC=0
+VIMRC_LOCATION=$HOME/.vimrc
 MODE=none
 
 while (($# > 0)); do
@@ -12,7 +13,8 @@ while (($# > 0)); do
 
         -n|--silent|--quiet) PRINT_ALL=0;;
 
-        -d|--disable-vimrc)  DISABLE_VIMRC=1;;
+        -b|--enable-vimrc) ENABLE_VIMRC=1;;
+        -u) ENABLE_VIMRC=1; VIMRC_LOCATION="$2"; shift;;
 
         -e|--exe-mode)         MODE=exe;;
         -r|--inverse-exe-mode) MODE=inverse-exe;;
@@ -45,8 +47,8 @@ done
 if [ "$PRINT_ALL" -eq "1" ]; then
     vim_cmds+=(-c ":%p")
 fi
-if [ "$DISABLE_VIMRC" -eq "1" ]; then
-    vim_cmds=(-u NONE "${vim_cmds[@]}")
+if [ "$ENABLE_VIMRC" -eq "1" ]; then
+    vim_cmds=(-u $VIMRC_LOCATION "${vim_cmds[@]}")
 fi
 
 vim - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2

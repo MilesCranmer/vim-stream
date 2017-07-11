@@ -87,5 +87,12 @@ TEST_NUM=10
 assert "$DIFF" $LINENO $TEST_NUM
 echo "+ test $TEST_NUM to delete all numbers not 1 passed"
 
+cat $TEST_DIR/test_files/numbers.txt | $VIMS -u $TEST_DIR/test_files/vimrc 'DeleteLine' > .tmp
+DIFF=$(diff -b .tmp $TEST_DIR/test_files/numbers_delete_first_line.txt)
+TEST_NUM=10
+assert "$DIFF" $LINENO $TEST_NUM
+echo "+ test $TEST_NUM to use vimrc macros passed"
+
+
 echo "+ tests all passed"
 rm .tmp
