@@ -122,6 +122,22 @@ cat script.sh | vims -r 'foo' 'A # Comment'
 
 ## Example 4
 
+Delete all modifications to files in a git repo:
+
+```
+git status | vims '1,/modified/-1d' '$?modified?,$d' -l 'df:dw' | xargs git checkout --
+```
+
+- `git status` - View which files are modified
+- `vims` - Start vims in normal mode
+- `1,/modified/-1d` - Delete all lines up to the first line with "modified"
+- `$?modified?+1,$d` - Delete all lines from below the last line with "modified"
+- `-l` - Turn on line exe mode (execute a command on each line)
+- `df:dw` - Delete until the ":", then delete the white space
+- `xargs git checkout --` - Pass all the filenames to `git checkout --`
+
+## Example 5
+
 Move all Python classes to the bottom of a file:
 ```
 cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
@@ -132,7 +148,7 @@ cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
      - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
      - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
      
-## Example 5
+## Example 6
 
 Only print the last 6 lines (just like tail)
 
@@ -143,7 +159,7 @@ cat txt | vims -n '$-5,$p'
 - `$-5,$` - A range extending from 6th last line to the last line
 - `p` - Print
 
-## Example 6
+## Example 7
 
 Replace all multi-whitespace sequences with a single space:
 
@@ -160,7 +176,7 @@ cat txt | vims -e '.' ':s/\\s\\+/ /g\<enter>'
 Note the double back-slashes needed (only in the second string of a pair in an exe command!)
 when you are typing a character like `\s`, but not like `\<enter>`.
 
-## Example 7
+## Example 8
 Resolve all git conflicts by deleting the changes on HEAD (keep the bottom code):
 
 ```
@@ -174,7 +190,7 @@ cat my_conflict.cpp | vims -e '^=======$' 'V?^<<<<<<< \<enter>d' -t '%g/^>>>>>>>
 - `%g/^>>>>>>> /d` - Delete remaining conflict lines
 
 
-## Example 8
+## Example 9
 
 Uncomment all commented-out lines (comment char: `#`)
 
@@ -185,7 +201,7 @@ cat script.sh | vims -e '^\s*#' '^x'
 - `^\s*#` - Work on lines with whitespace followed by a comment char, followed by anything
 - `^x` - Go to the first non-whitespace character, and delete it
 
-## Example 9
+## Example 10
 
 
 Delete the first word of each line and put it at the end:
@@ -199,7 +215,7 @@ cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
 - `A \<esc>` - Start insert mode at front of line, type a space, hit escape key
 - `\"kp` - Paste from the register `k`
 
-## Example 10
+## Example 11
 
 Run a super-vanilla long chain of commands in simple mode, starting from line 1 of a file:
 
@@ -213,7 +229,7 @@ cat python.py | vims -s '/^class\<enter>O# This class broke\<esc>Go\<enter># Thi
 - `# This file broke'` - Write at the end of the file: "# This file broke"
 
 
-## Example 11
+## Example 12
 
 Reverse a file:
 
@@ -225,7 +241,7 @@ cat text.txt | vims '%g/.*/m0'
 - `.*` - Matches all lines
 - `m0` - Move line to start of file
 
-## Example 12
+## Example 13
 
 Sort the output of `ls -l` by file size, using the
 unix command `sort` (which you can use inside vim):
@@ -241,9 +257,8 @@ ls -l | vims '1d' '%!sort -k5n'
 
 # Credit
 
-I innovated very little (none) on this script, I basically took a Google Groups
+The heart of this script comes from a Google groups posting:
 [posting](https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb5/Ir0faiNaFZwJ),
-then had the nice folks on [SO](https://stackoverflow.com/questions/44745046/bash-pass-all-arguments-exactly-as-they-are-to-a-function-and-prepend-a-flag-on)
-help me put it together.
+and then from an answer on [SO](https://stackoverflow.com/questions/44745046/bash-pass-all-arguments-exactly-as-they-are-to-a-function-and-prepend-a-flag-on)
 
 Thanks!
