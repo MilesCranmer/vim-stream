@@ -109,19 +109,6 @@ cat mylog.log | vims -e '^\s*$' 'dd' -l 'Vu'
 - `-l` - Turn off exe mode, turn on line exe mode
 
 ## Example 3
-Resolve all git conflicts by deleting the changes on HEAD (keep the bottom code):
-
-```
-cat my_conflict.cpp | vims -e '^=======$' 'V?^<<<<<<< \<enter>d' -t '%g/^>>>>>>> /d'
-```
-
-- `-e` - Turn on exe mode
-- `^=======$` - Match the middle bit of a git conflict
-- `V?^<<<<<<< \<enter>d` - Highlight the line, backward search to the top of the conflict, delete it.
-- `-t` - Turn off exe mode
-- `%g/^>>>>>>> /d` - Delete remaining conflict lines
-
-## Example 4
 
 Add a comment (`#`) on every line NOT containing foo:
 
@@ -133,9 +120,9 @@ cat script.sh | vims -r 'foo' 'A # Comment'
 - `foo` - Match all lines with the word "foo"
 - `A # Comment` - At the end of the line, type " # Comment"
 
-## Example 5
+## Example 4
 
-Say you want to move all Python classes to the bottom of a file:
+Move all Python classes to the bottom of a file:
 ```
 cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
 ```
@@ -145,7 +132,7 @@ cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
      - `exe` - Execute the following, including escaped sequences (so you can call `\<c-o>` to mean Ctrl-o)
      - `norm V/^\S\<enter>kdGp` Enter normal mode, visual select to the next zero-indentation line, move up a line, delete, paste it at the bottom 
      
-## Example 6
+## Example 5
 
 Only print the last 6 lines (just like tail)
 
@@ -156,7 +143,7 @@ cat txt | vims -n '$-5,$p'
 - `$-5,$` - A range extending from 6th last line to the last line
 - `p` - Print
 
-## Example 7
+## Example 6
 
 Replace all multi-whitespace sequences with a single space:
 
@@ -172,6 +159,20 @@ cat txt | vims -e '.' ':s/\\s\\+/ /g\<enter>'
 
 Note the double back-slashes needed (only in the second string of a pair in an exe command!)
 when you are typing a character like `\s`, but not like `\<enter>`.
+
+## Example 7
+Resolve all git conflicts by deleting the changes on HEAD (keep the bottom code):
+
+```
+cat my_conflict.cpp | vims -e '^=======$' 'V?^<<<<<<< \<enter>d' -t '%g/^>>>>>>> /d'
+```
+
+- `-e` - Turn on exe mode
+- `^=======$` - Match the middle bit of a git conflict
+- `V?^<<<<<<< \<enter>d` - Highlight the line, backward search to the top of the conflict, delete it.
+- `-t` - Turn off exe mode
+- `%g/^>>>>>>> /d` - Delete remaining conflict lines
+
 
 ## Example 8
 
