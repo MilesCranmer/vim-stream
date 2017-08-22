@@ -262,3 +262,7 @@ The heart of this script comes from a Google groups posting:
 and then from an answer on [SO](https://stackoverflow.com/questions/44745046/bash-pass-all-arguments-exactly-as-they-are-to-a-function-and-prepend-a-flag-on)
 
 Thanks!
+
+## TODO
+
+- Find way around vim command limit (only can seem to launch ~8 commands at once to vims - see issue #1)
