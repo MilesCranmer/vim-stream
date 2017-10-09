@@ -2,20 +2,10 @@
 
 [![Build Status](https://travis-ci.org/MilesCranmer/vim-stream.svg?branch=master)](https://travis-ci.org/MilesCranmer/vim-stream) | [![Codecov branch](https://img.shields.io/codecov/c/github/MilesCranmer/vim-stream/master.svg)](https://codecov.io/gh/MilesCranmer/vim-stream)
 
-Do you live in a vim editor? Then, maybe, stream
-editing with vim feels more natural than
-sed or awk:
-
-```
-cat myfile.txt | vims '3,4norm yyGp' '%g/foo/d'
-```
-which means: 
- - `3,4norm yyGp` - on the 3rd and 4th line, enter normal mode and
-copy the line to the bottom of the file.
- - `%g/foo/d` - delete every line containing "`foo`"
+![Demo](https://i.imgur.com/dntK3MP.gif)
 
 
-You can also use "exe" mode (flag `-e`):
+You can use "exe" mode (flag `-e`):
 for example, to comment out in C++
 every line containing `my_bad_var`,
 then delete the line above it:
