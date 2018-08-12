@@ -58,5 +58,5 @@ if [ -x "$NVIM_BIN" ]; then
 elif [ -x "$VIM_BIN" ]; then
   ${VIM_BIN} - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2
 else
-  echo "Nor vim and nvim are installed!"
+  echo "Neither vim nor nvim are installed!"
 fi
