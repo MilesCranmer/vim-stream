@@ -49,5 +49,14 @@ if [ "$DISABLE_VIMRC" -eq "1" ]; then
     vim_cmds=(-u NONE "${vim_cmds[@]}")
 fi
 
-vim - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2
+# locate the vim/nvim binaries
+VIM_BIN="$(whereis -b vim | awk '{print $2}')"
+NVIM_BIN="$(whereis -b nvim | awk '{print $2}')"
 
+if [ -x "$NVIM_BIN" ]; then
+  ${NVIM_BIN} - -nes "${vim_cmds[@]}" -c ':q!'
+elif [ -x "$VIM_BIN" ]; then
+  ${VIM_BIN} - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2
+else
+  echo "Neither vim nor nvim are installed!"
+fi
