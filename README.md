@@ -21,7 +21,7 @@ To install, put `vims` somewhere on your path, e.g., `/usr/bin`.
 
 # Usage
 
-`... | vims ...`
+`... | vims [...]`
 - (default) `-t [EX_CMD]` Ex mode. Works as if you typed ":" in vim.
 - `-s [CMD]` Simple command mode. Starts on the first line in command mode (e.g., `x` deletes a char).
 - `-l [CMD]` Line command mode. Runs the command on every line. 
