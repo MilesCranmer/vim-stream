@@ -5,34 +5,34 @@
 ![Demo](https://i.imgur.com/dntK3MP.gif)
 
 
-You can use "exe" mode (flag `-e`):
-for example, to comment out in C++
-every line containing `my_bad_var`,
-then delete the line above it:
+Ever wish you could simply apply a vim command to every line
+in a command output automatically?
+If you use vim as your primary editor, this is likely much much easier
+than having to look up sed commands every time you filter a command output.
+
+E.g., `cat file.txt | vims -l 'f|d$'` will go through every line, and run "f|d$",
+which is the vim command for deleting every character after "|". 
+See below for many other useful features.
+
+# Install 
+
+To install, put `vims` somewhere on your path, e.g., `/usr/bin`.
+
+
+# Usage
+
+`... | vims ...`
+- (default) `-t [EX_CMD]` Ex mode. Works as if you typed ":" in vim.
+- `-s [CMD]` Simple command mode. Starts on the first line in command mode (e.g., `x` deletes a char).
+- `-l [CMD]` Line command mode. Runs the command on every line. 
+- `-e [REGEX] [CMD]` Exe mode. Runs the command on every line matching `REGEX` (uses vim regex).
+- `-r [REGEX] [CMD]` Inverse exe mode. Runs the command on every line not matching `REGEX` (uses vim regex).
+- `-n` quiet. Don't print lines to stdout. You will then have to use `:p` command to print manually.
+
+Note that for commands, you can write `\<esc>` to hit the escape key, or `\<c-o>` to hit ctrl-O.
 
 ```
-cat my_script.cpp | vims -e 'my_bad_var' 'I//\<esc>kdd'
-```
-
-Which translates to `vims '%g/my_bad_var/exe "norm I//\<esc>kdd"'` - the `I` being the command
-to start insert at the start of the line, and `//` being the comment sequence.
-`\<esc>kdd` pushes the escape key, moves up a line, then deletes the line.
-
-```
-> echo 'Hello World!' | vims -s 'ea Beautiful'
-Hello Beautiful World!
-```
-
-- `-s` - Turn on simple mode (normal vim commands, start at char 0, line 0)
-- `ea` - Start inserting after end of first word
-
-# Usage/Examples
-
-To install,
-put `vims` somewhere on your path, e.g., `/usr/bin`.
-
-```
-{command} | vims [-n|--quiet] [-d|--disable-vimrc]
+{command} | vims [-n|--quiet]
                  [-e|--exe-mode] [-r|--inverse-exe-mode]
                  [-s|--simple-mode] [-l|--line-exe-mode]
                  [-t|--turn-off-mode]
@@ -42,6 +42,8 @@ put `vims` somewhere on your path, e.g., `/usr/bin`.
 Call `vims` on piped input, providing a list of arguments that you
 would use in vim command-line mode. All lines not deleted are printed
 by default, but you can turn this off with a `-n|--quiet` flag.
+
+## Discussion:
 
 Trigger "exe" mode using the `-e|--exe-mode` flag, which creates macros
 for `'%g/$1/exe "norm $2"'` (see [the power of `:g`](http://vim.wikia.com/wiki/Power_of_g)),
@@ -63,9 +65,6 @@ at line 1. Use the same backslashes (`\<enter>`) as you do for exe mode.
 Modes are activated for all the proceeding args. You can switch
 modes partway, by calling the flag for the other mode you want, or you
 can turn off any activated mode with `-t|--turn-off-mode`.
-
-Your default vimrc should be enabled by default, turn it off with
-`-d|--disable-vimrc`.
 
 ## Example 1
 Delete lines 10-15, and print the remainder:
