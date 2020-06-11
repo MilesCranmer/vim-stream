@@ -9,34 +9,24 @@ MODE=none
 
 while (($# > 0)); do
     case "$1" in
-
         -n|--silent|--quiet) PRINT_ALL=0;;
-
         -d|--disable-vimrc)  DISABLE_VIMRC=1;;
-
         -e|--exe-mode)         MODE=exe;;
         -r|--inverse-exe-mode) MODE=inverse-exe;;
         -l|--line-exe-mode)    MODE=line-exe;;
         -s|--simple-mode)      MODE=simple;;
         -t|--turn-off-mode)    MODE=none;;
-
         *)
             case "$MODE" in
-
                 none)        vim_cmds+=(-c "$1");;
                 simple)      vim_cmds+=(-c ":exe \"norm gg""$1""\"");;
                 line-exe)    vim_cmds+=(-c ":%g/.*/exe \"norm ""$1""\"");;
-
                 exe)         vim_cmds+=(-c "%g/$1/exe \"norm $2\""); shift;;
                 inverse-exe) vim_cmds+=(-c "%v/$1/exe \"norm $2\""); shift;;
-
             esac
             ;;
-
     esac
-
     shift
-
 done
 
 # Headless vim which exits after printing all lines
@@ -50,4 +40,3 @@ if [ "$DISABLE_VIMRC" -eq "1" ]; then
 fi
 
 vim - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2
-
