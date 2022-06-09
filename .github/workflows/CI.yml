@@ -41,6 +41,6 @@ jobs:
           mkdir -p coverage
           TEST_DIR=$(pwd)/test VIMS=./vims kcov coverage ./test/test.sh
       - name: Upload coverage
-        run: bash <(curl -s https://codecov.io/bash)
+        run: bash <(curl -s https://codecov.io/bash) -s coverage
 
 
