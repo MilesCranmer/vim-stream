@@ -1,14 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 # The argument fixes were supplied by John Kugelman
 # https://stackoverflow.com/a/44745698/2689923
-vim_cmds=()
 
 PRINT_ALL=1
 DISABLE_VIMRC=0
 MODE=none
 
-while (($# > 0)); do
+set -- "$@" '---vims-end---'
+while :; do
     case "$1" in
+        ---vims-end---) shift; break;;
         -n|--silent|--quiet) PRINT_ALL=0;;
         -d|--disable-vimrc)  DISABLE_VIMRC=1;;
         -e|--exe-mode)         MODE=exe;;
@@ -18,11 +19,11 @@ while (($# > 0)); do
         -t|--turn-off-mode)    MODE=none;;
         *)
             case "$MODE" in
-                none)        vim_cmds+=(-c "$1");;
-                simple)      vim_cmds+=(-c ":exe \"norm gg""$1""\"");;
-                line-exe)    vim_cmds+=(-c ":%g/.*/exe \"norm ""$1""\"");;
-                exe)         vim_cmds+=(-c "%g/$1/exe \"norm $2\""); shift;;
-                inverse-exe) vim_cmds+=(-c "%v/$1/exe \"norm $2\""); shift;;
+                none)        set -- "$@" -c "$1" ;;
+                simple)      set -- "$@" -c ":exe \"norm gg""$1""\"";;
+                line-exe)    set -- "$@" -c ":%g/.*/exe \"norm ""$1""\"";;
+                exe)         set -- "$@" -c "%g/$1/exe \"norm $2\""; shift;;
+                inverse-exe) set -- "$@" -c "%v/$1/exe \"norm $2\""; shift;;
             esac
             ;;
     esac
@@ -33,10 +34,10 @@ done
 # Taken from Csaba Hoch:
 # https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb4/Ir0faiNaFZwJ
 if [ "$PRINT_ALL" -eq "1" ]; then
-    vim_cmds+=(-c ":%p")
+    set -- "$@" -c ":%p"
 fi
 if [ "$DISABLE_VIMRC" -eq "1" ]; then
-    vim_cmds=(-u NONE "${vim_cmds[@]}")
+    set -- -u NONE "$@"
 fi
 
-vim - -nes "${vim_cmds[@]}" -c ':q!' | tail -n +2
+vim - -nes "$@" -c ':q!' | tail -n +2

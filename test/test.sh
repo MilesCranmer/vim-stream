@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # From http://tldp.org/LDP/abs/html/debugging.html
 VIMS=./vims
 
