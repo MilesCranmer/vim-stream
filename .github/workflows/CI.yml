@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    
+    steps:
+      - uses: actions/checkout@v1.0.0
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y libcurl4-openssl-dev libelf-dev libdw-dev cmake vim
+      - name: Install kcov
+        run: |
+          wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz
+          tar xzf master.tar.gz
+          cd kcov-master
+          mkdir build
+          cd build
+          cmake ..
+          make
+          make install
+          cd ../..
+          rm -rf kcov-master
+      - name: Run tests
+        run: |
+          mkdir -p coverage
+          TEST_DIR=$(pwd)/test VIMS=./vims kcov coverage ./test/test.sh
+      - name: Upload coverage
+        run: bash <(curl -s https://codecov.io/bash)
+
+
