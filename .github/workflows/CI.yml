@@ -23,19 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libelf-dev libdw-dev cmake vim
-      - name: Install kcov
-        run: |
-          wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz
-          tar xzf master.tar.gz
-          cd kcov-master
-          mkdir build
-          cd build
-          cmake ..
-          make
-          sudo make install
-          cd ../..
-          rm -rf kcov-master
+          sudo apt-get install -y libcurl4-openssl-dev libelf-dev libdw-dev cmake vim kcov
       - name: Run tests
         run: |
           mkdir -p coverage
