@@ -1,6 +1,4 @@
 #!/bin/sh
-# The argument fixes were supplied by John Kugelman
-# https://stackoverflow.com/a/44745698/2689923
 
 PRINT_ALL=1
 DISABLE_VIMRC=0
