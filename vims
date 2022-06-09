@@ -17,7 +17,7 @@ while :; do
         -t|--turn-off-mode)    MODE=none;;
         *)
             case "$MODE" in
-                none)        set -- "$@" -c "$1" ;;
+                none)        set -- "$@" -c "$1";;
                 simple)      set -- "$@" -c ":exe \"norm gg""$1""\"";;
                 line-exe)    set -- "$@" -c ":%g/.*/exe \"norm ""$1""\"";;
                 exe)         set -- "$@" -c "%g/$1/exe \"norm $2\""; shift;;
