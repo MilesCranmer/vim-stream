@@ -4,6 +4,52 @@ PRINT_ALL=1
 DISABLE_VIMRC=0
 MODE=none
 
+# First, simply check if the user passed "-h" or "--help":
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    cat <<EOF
+{command} | vims [-n|--quiet]
+                 [-e|--exe-mode] [-r|--inverse-exe-mode]
+                 [-s|--simple-mode] [-l|--line-exe-mode]
+                 [-t|--turn-off-mode]
+                 [-h|--help]
+                 [ <args>... ]
+    * (default) -t [EX_CMD] Ex mode. Works as if you typed ":" in vim.
+    * -s [CMD] Simple command mode. Starts on the first line in command mode (e.g., x deletes a char).
+    * -l [CMD] Line command mode. Runs the command on every line.
+    * -e [REGEX] [CMD] Exe mode. Runs the command on every line matching REGEX (uses vim regex).
+    * -r [REGEX] [CMD] Inverse exe mode. Runs the command on every line not matching REGEX (uses vim regex).
+    * -n quiet. Dont print lines to stdout. You will then have to use :p command to print manually.
+    * -h help. Print this help message.
+
+Note that for commands, you can write \<esc> to hit the escape key, or \<c-o> to hit ctrl-O.
+
+Call vims on piped input, providing a list of arguments that you
+would use in vim command-line mode. All lines not deleted are printed
+by default, but you can turn this off with a -n|--quiet flag.
+
+Trigger "exe" mode using the -e|--exe-mode flag, which creates macros
+for %g/$1/exe "norm $2" (see [the power of :g](http://vim.wikia.com/wiki/Power_of_g)),
+where $1 is the first arg of a pair,
+and $2 is the last arg of a pair. This lets you type non-text characters,
+like \<esc>, \<c-o>, etc.
+
+Likewise, -l|--line-exe-mode translates to %g/.*/exe "norm$1", meaning
+it executes a command on ALL lines.
+Inverse exe mode is done with the -r|--inverse-exe-mode flag, which
+does the same as exe mode, but only on lines NOT matching the regex.
+
+Use simple mode with the -s|--simple-mode flag, which is as vanilla
+as it gets. This translates every passed argument to: exe "norm $1", meaning
+that you can run commands just like you opened the editor, starting
+at line 1. Use the same backslashes (\<enter>) as you do for exe mode.
+
+Modes are activated for all the proceeding args. You can switch
+modes partway, by calling the flag for the other mode you want, or you
+can turn off any activated mode with -t|--turn-off-mode.
+EOF
+    exit 0
+fi
+
 # This creates an array to store vim commands to run:
 set -- "$@" '---vims-end---'
 while :; do
