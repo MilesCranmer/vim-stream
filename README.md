@@ -28,6 +28,7 @@ To install, put `vims` somewhere on your path, e.g., `/usr/bin`.
 - `-e [REGEX] [CMD]` Exe mode. Runs the command on every line matching `REGEX` (uses vim regex).
 - `-r [REGEX] [CMD]` Inverse exe mode. Runs the command on every line not matching `REGEX` (uses vim regex).
 - `-n` quiet. Don't print lines to stdout. You will then have to use `:p` command to print manually.
+- `-h` help. Print this documentation.
 
 Note that for commands, you can write `\<esc>` to hit the escape key, or `\<c-o>` to hit ctrl-O.
 
@@ -36,6 +37,7 @@ Note that for commands, you can write `\<esc>` to hit the escape key, or `\<c-o>
                  [-e|--exe-mode] [-r|--inverse-exe-mode]
                  [-s|--simple-mode] [-l|--line-exe-mode]
                  [-t|--turn-off-mode]
+                 [-h|--help]
                  [ <args>... ]
 ```
 
