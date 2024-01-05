@@ -34,15 +34,5 @@ jobs:
       - uses: rhysd/action-setup-vim@v1
         with:
           version: ${{ matrix.vim }}
-      - name: Run tests without coverage
-        if: ${{ matrix.os != 'ubuntu-latest' }}
-        run: |
-          TEST_DIR=$(pwd)/test VIMS=./vims ./test/test.sh
-      - name: Run tests with coverage
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          mkdir -p coverage
-          TEST_DIR=$(pwd)/test VIMS=./vims kcov coverage ./test/test.sh
-      - name: Upload coverage
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: bash <(curl -s https://codecov.io/bash) -s coverage
+      - name: Run tests
+        run: ./test/bats/bin/bats ./test/test.bats
