@@ -21,8 +21,8 @@ jobs:
           - macos-latest
           - windows-latest
         vim:
-          - 'v9.0.2190'
-          - 'v8.2.5172'
+          - 'v9.0.2189'
+          - 'v8.2.4286'
 
     steps:
       - uses: actions/checkout@v4
