@@ -13,22 +13,33 @@ jobs:
     runs-on: ${{ matrix.os }}
     defaults:
       run:
-        shell: bash
+        shell: bash -l {0}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-    
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        vim:
+          - 'v9.0.2189'
+          - 'v8.2.4286'
+
     steps:
-      - uses: actions/checkout@v1.0.0
-      - name: Install dependencies
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Install coverage dependencies
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libelf-dev libdw-dev cmake vim kcov
+          sudo apt-get install -y libcurl4-openssl-dev libelf-dev libdw-dev cmake kcov
+      - uses: thinca/action-setup-vim@v1
+        with:
+          vim_version: ${{ matrix.vim }}
+      - name: Ensure vim installed
+        run: vim --version
+      - name: Smoke test of vims
+        run: echo "Hello" | ./vims ''
       - name: Run tests
-        run: |
-          mkdir -p coverage
-          TEST_DIR=$(pwd)/test VIMS=./vims kcov coverage ./test/test.sh
-      - name: Upload coverage
-        run: bash <(curl -s https://codecov.io/bash) -s coverage
-
-
+        run: VIMS=$PWD/vims ./test/bats/bin/bats ./test/test.bats

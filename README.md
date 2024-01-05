@@ -1,6 +1,6 @@
 # vims 
 
-[![CI](https://github.com/MilesCranmer/vim-stream/actions/workflows/CI.yml/badge.svg)](https://github.com/MilesCranmer/vim-stream/actions/workflows/CI.yml) [![Codecov branch](https://img.shields.io/codecov/c/github/MilesCranmer/vim-stream/master.svg)](https://codecov.io/gh/MilesCranmer/vim-stream)
+[![CI](https://github.com/MilesCranmer/vim-stream/actions/workflows/CI.yml/badge.svg)](https://github.com/MilesCranmer/vim-stream/actions/workflows/CI.yml)
 
 ![Demo](https://i.imgur.com/dntK3MP.gif)
 
