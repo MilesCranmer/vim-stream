@@ -38,4 +38,4 @@ jobs:
         with:
           version: ${{ matrix.vim }}
       - name: Run tests
-        run: ./test/bats/bin/bats ./test/test.bats
+        run: VIMS=$PWD/vims ./test/bats/bin/bats ./test/test.bats
