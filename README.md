@@ -71,7 +71,7 @@ can turn off any activated mode with `-t|--turn-off-mode`.
 ## Example 1
 Delete lines 10-15, and print the remainder:
 
-```
+```bash
 cat myfile.txt | vims '10,15d'
 ```
 
@@ -81,7 +81,7 @@ cat myfile.txt | vims '10,15d'
 ## Example 2
 Delete blank lines, then lower-case everything:
 
-```
+```bash
 cat mylog.log | vims -e '^\s*$' 'dd' '.' 'Vu'
 ```
 
@@ -93,7 +93,7 @@ cat mylog.log | vims -e '^\s*$' 'dd' '.' 'Vu'
 
 Or, with line exe mode (a shorthand for `.*`):
 
-```
+```bash
 cat mylog.log | vims -e '^\s*$' 'dd' -l 'Vu'
 ```
 
@@ -103,7 +103,7 @@ cat mylog.log | vims -e '^\s*$' 'dd' -l 'Vu'
 
 Add a comment (`#`) on every line NOT containing foo:
 
-```
+```bash
 cat script.sh | vims -r 'foo' 'A # Comment'
 ```
 
@@ -115,7 +115,7 @@ cat script.sh | vims -r 'foo' 'A # Comment'
 
 Delete all modifications to files in a git repo:
 
-```
+```bash
 git status | vims '1,/modified/-1d' '$?modified?,$d' -l 'df:dw' | xargs git checkout --
 ```
 
@@ -130,7 +130,7 @@ git status | vims '1,/modified/-1d' '$?modified?,$d' -l 'df:dw' | xargs git chec
 ## Example 5
 
 Move all Python classes to the bottom of a file:
-```
+```bash
 cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
 ```
 
@@ -143,7 +143,7 @@ cat myscript.py | vims -e '^class' 'V/^\\S\<enter>kdGp'
 
 Only print the last 6 lines (just like tail)
 
-```
+```bash
 cat txt | vims -n '$-5,$p'
 ```
 - `-n` - Don't print all lines automatically
@@ -154,13 +154,13 @@ cat txt | vims -n '$-5,$p'
 
 Replace all multi-whitespace sequences with a single space:
 
-```
+```bash
 cat txt | vims '%s/\s\+/ /g'
 ```
 
 Which can also be done in exe mode:
 
-```
+```bash
 cat txt | vims -e '.' ':s/\\s\\+/ /g\<enter>'
 ```
 
@@ -170,7 +170,7 @@ when you are typing a character like `\s`, but not like `\<enter>`.
 ## Example 8
 Resolve all git conflicts by deleting the changes on HEAD (keep the bottom code):
 
-```
+```bash
 cat my_conflict.cpp | vims -e '^=======$' 'V?^<<<<<<< \<enter>d' -t '%g/^>>>>>>> /d'
 ```
 
@@ -185,7 +185,7 @@ cat my_conflict.cpp | vims -e '^=======$' 'V?^<<<<<<< \<enter>d' -t '%g/^>>>>>>>
 
 Uncomment all commented-out lines (comment char: `#`)
 
-```
+```bash
 cat script.sh | vims -e '^\s*#' '^x'
 ```
 
@@ -197,7 +197,7 @@ cat script.sh | vims -e '^\s*#' '^x'
 
 Delete the first word of each line and put it at the end:
 
-```
+```bash
 cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
 ```
 
@@ -210,7 +210,7 @@ cat script.sh | vims -e '^[A-Za-z]' '\"kdwA \<esc>\"kp'
 
 Run a super-vanilla long chain of commands in simple mode, starting from line 1 of a file:
 
-```
+```bash
 cat python.py | vims -s '/^class\<enter>O# This class broke\<esc>Go\<enter># This file broke'
 ```
 
@@ -224,7 +224,7 @@ cat python.py | vims -s '/^class\<enter>O# This class broke\<esc>Go\<enter># Thi
 
 Reverse a file:
 
-```
+```bash
 cat text.txt | vims '%g/.*/m0'
 ```
 
@@ -237,7 +237,7 @@ cat text.txt | vims '%g/.*/m0'
 Sort the output of `ls -l` by file size, using the
 unix command `sort` (which you can use inside vim):
 
-```
+```bash
 ls -l | vims '1d' '%!sort -k5n'
 ```
 
@@ -245,6 +245,28 @@ ls -l | vims '1d' '%!sort -k5n'
 - `%!` - Call the following external command on all lines
 - `sort` - The unix sort command
 - `-k5n` - Sort by column 5, numerically
+
+## Example 14
+
+Find matching parentheses for a function call (something `sed` and other regexp tools can't do),
+and replace only those parentheses with square brackets:
+
+```bash
+> echo "0.9 * (sqrt(3.9 * (0.8 - 0.2)) / 20.0)" | vims -e 'sqrt(' '/sqrt(\<enter>f(lvh%hxhi[]\<esc>P' -t '%s/]()/]/g'
+0.9 * (sqrt[3.9 * (0.8 - 0.2)] / 20.0)
+```
+
+- `-e 'sqrt('` - Only run this vim command on matching lines
+- `/sqrt(\<enter>` - In vim, hit `/` to start a forward search, then search for "sqrt(" and go to the first match
+- `f(` - From the first character of "sqrt", go to the open bracket
+- `lv` - Move right, so we are inside the "sqrt". Start visually selecting.
+- `h%` - Move back left to the open bracket, and use vim's `%` command to move to the matching closing bracket
+- `hx` - Move left, so we are inside the "sqrt" (but now on the far side). Delete the contents (which is saved to the clipboard!)
+- `hi` - Move left, so we are now at the open bracket again.
+- `[]` - Write out `[]` which will be our new square brackets
+- `\<esc>` - Back to normal mode
+- `P` - Paste the contents into the `[]`
+- `-t '%s/]()/]/g'` - This is a new command which simply cleans up the `()`
 
 # Credit
 
