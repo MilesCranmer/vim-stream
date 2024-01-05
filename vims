@@ -80,14 +80,14 @@ while :; do
 done
 
 # Headless vim which exits after printing all lines
-# Taken from Csaba Hoch:
-# https://groups.google.com/forum/#!msg/vim_use/NfqbCdUkDb4/Ir0faiNaFZwJ
 if [ "$PRINT_ALL" -eq "1" ]; then
-    set -- "$@" -c ":%p"
+    set -- "$@" -c "%w! /dev/stdout | q!"
+else
+    set -- "$@" -c "q!"
 fi
 if [ "$DISABLE_VIMRC" -eq "1" ]; then
     set -- -u NONE "$@"
 fi
 
 # Finally, we execute the stored array of vim commands:
-vim - -nes "$@" -c ':q!' | tail -n +2
+vim -nes "$@" /dev/stdin
