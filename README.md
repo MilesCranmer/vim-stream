@@ -16,7 +16,9 @@ See below for many other useful features.
 
 # Install 
 
-To install, put `vims` somewhere on your path, e.g., `/usr/bin`.
+1. Download the file [`vims`](https://raw.githubusercontent.com/MilesCranmer/vim-stream/master/vims)
+2. Put this file somewhere on your `PATH` environment variable, such as `/usr/bin` or `$HOME/.local/bin`
+3. Make it executable with `chmod +x vims`. That's it!
 
 
 # Usage
