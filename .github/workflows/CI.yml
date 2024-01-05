@@ -39,5 +39,7 @@ jobs:
           vim_version: ${{ matrix.vim }}
       - name: Ensure vim installed
         run: vim --version
+      - name: Smoke test of vims
+        run: echo "Hello" | ./vims ''
       - name: Run tests
         run: VIMS=$PWD/vims ./test/bats/bin/bats ./test/test.bats
